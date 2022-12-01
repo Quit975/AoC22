@@ -82,3 +82,40 @@ pub fn test_bonus() -> i32 {
 
     increment_count
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* DAY 1 - CALORIES
+
+The Elves take turns writing down the number of Calories contained by the various meals, snacks, rations, etc. that they've brought with them, one item per line. 
+Each Elf separates their own inventory from the previous Elf's inventory (if any) by a blank line.
+
+In case the Elves get hungry and need extra snacks, they need to know which Elf to ask: they'd like to know how many Calories are being carried by the Elf carrying the most Calories. In the example above, this is 24000 (carried by the fourth Elf).
+
+Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
+
+Input - inputs\\day1.txt
+
+*/
+
+pub fn day1_base() -> i32 {
+    let lines  = read_lines("inputs\\day1.txt");
+
+    let mut highest_calories : i32 = 0;
+
+    for line in lines {
+        let mut current_sum : i32 = 0;
+        if let Ok(input) = line {
+            if let Ok(calories_num) = input.parse::<i32>() {
+                current_sum += calories_num;
+            }
+            else {
+                if current_sum > highest_calories {
+                    highest_calories = current_sum;
+                }
+            }
+        }
+    }
+    
+    highest_calories
+}

@@ -8,7 +8,14 @@ mod prelude {
 use solutions::*;
 
 fn main() {
+    day1();
     test();
+}
+
+fn day1() {
+    println!("========== DAY 1 ===========");
+    println!("Day 1 - BASE answer : {}", day1_base());
+    //println!("Day 1 - BONUS answer : {}\n", test_bonus());
 }
 
 fn test() {
