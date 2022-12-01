@@ -1,6 +1,89 @@
 use crate::prelude::*;
 
-/* DAY 1/2021 - TEST BASE
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* DAY 1 - CALORIES
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+BASE
+
+The Elves take turns writing down the number of Calories contained by the various meals, snacks, rations, etc. that they've brought with them, one item per line. 
+Each Elf separates their own inventory from the previous Elf's inventory (if any) by a blank line.
+
+In case the Elves get hungry and need extra snacks, they need to know which Elf to ask: they'd like to know how many Calories are being carried by the Elf carrying the most Calories. In the example above, this is 24000 (carried by the fourth Elf).
+
+Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
+
+Input - inputs\\day1.txt
+
+*/
+
+pub fn day1_base() -> i32 {
+    let lines  = read_lines("inputs\\day1.txt");
+
+    let mut highest_calories : i32 = 0;
+    let mut current_sum : i32 = 0;
+
+    for line in lines {
+        if let Ok(input) = line {
+            if let Ok(calories_num) = input.parse::<i32>() {
+                current_sum += calories_num;
+            }
+            else {
+                if current_sum > highest_calories {
+                    highest_calories = current_sum;
+                }
+                current_sum = 0;
+            }
+        }
+    }
+    
+    highest_calories
+}
+
+/*
+BONUS
+
+Find the top three Elves carrying the most Calories. How many Calories are those Elves carrying in total?
+*/
+
+pub fn day1_bonus() -> i32 {
+    let lines  = read_lines("inputs\\day1.txt");
+    
+    let mut top_three_calories : [i32; 3] = [0; 3];
+    let mut current_sum : i32 = 0;
+
+    for line in lines {
+        if let Ok(input) = line {
+            if let Ok(calories_num) = input.parse::<i32>() {
+                current_sum += calories_num;
+            }
+            else {
+                if let Some(lowest) = top_three_calories.iter_mut().min() {
+                    if *lowest < current_sum {
+                        *lowest = current_sum;
+                    }
+                }
+
+                current_sum = 0;
+            }
+        }
+    }
+
+    top_three_calories.iter().sum()
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* DAY 1/2021 - TEST
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+BASE
 
 To do this, count the number of times a depth measurement increases from the previous measurement. 
 (There is no measurement before the first measurement.) 
@@ -83,39 +166,3 @@ pub fn test_bonus() -> i32 {
     increment_count
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-/* DAY 1 - CALORIES
-
-The Elves take turns writing down the number of Calories contained by the various meals, snacks, rations, etc. that they've brought with them, one item per line. 
-Each Elf separates their own inventory from the previous Elf's inventory (if any) by a blank line.
-
-In case the Elves get hungry and need extra snacks, they need to know which Elf to ask: they'd like to know how many Calories are being carried by the Elf carrying the most Calories. In the example above, this is 24000 (carried by the fourth Elf).
-
-Find the Elf carrying the most Calories. How many total Calories is that Elf carrying?
-
-Input - inputs\\day1.txt
-
-*/
-
-pub fn day1_base() -> i32 {
-    let lines  = read_lines("inputs\\day1.txt");
-
-    let mut highest_calories : i32 = 0;
-
-    for line in lines {
-        let mut current_sum : i32 = 0;
-        if let Ok(input) = line {
-            if let Ok(calories_num) = input.parse::<i32>() {
-                current_sum += calories_num;
-            }
-            else {
-                if current_sum > highest_calories {
-                    highest_calories = current_sum;
-                }
-            }
-        }
-    }
-    
-    highest_calories
-}

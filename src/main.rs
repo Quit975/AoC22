@@ -15,7 +15,7 @@ fn main() {
 fn day1() {
     println!("========== DAY 1 ===========");
     println!("Day 1 - BASE answer : {}", day1_base());
-    //println!("Day 1 - BONUS answer : {}\n", test_bonus());
+    println!("Day 1 - BONUS answer : {}\n", day1_bonus());
 }
 
 fn test() {
