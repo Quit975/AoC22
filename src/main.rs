@@ -11,4 +11,5 @@ use days::*;
 fn main() {
     Day1::new().print_answers();
     Day2::new().print_answers();
+    Day3::new().print_answers();
 }
