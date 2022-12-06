@@ -13,4 +13,5 @@ fn main() {
     Day2::new().print_answers();
     Day3::new().print_answers();
     Day4::new().print_answers();
+    Day5::new().print_answers();
 }
