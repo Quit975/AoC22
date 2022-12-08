@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* DAY 5 - Tuning Trouble
+/* DAY 6 - Tuning Trouble
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +29,11 @@ How many characters need to be processed before the first start-of-packet marker
 
 BONUS
 
+Your device's communication system is correctly detecting packets, but still isn't working. It looks like it also needs to look for messages.
 
+A start-of-message marker is just like a start-of-packet marker, except it consists of 14 distinct characters rather than 4.
+
+How many characters need to be processed before the first start-of-message marker is detected?
 
 Input : inputs\\day6.txt
 */
