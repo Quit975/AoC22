@@ -9,14 +9,14 @@ mod prelude {
 use days::*;
 
 fn main() {
-    Day1::new().print_answers();
-    Day2::new().print_answers();
-    Day3::new().print_answers();
-    Day4::new().print_answers();
-    Day5::new().print_answers();
-    Day6::new().print_answers();
-    Day7::new().print_answers();
-    Day8::new().print_answers();
+    // Day1::new().print_answers();
+    // Day2::new().print_answers();
+    // Day3::new().print_answers();
+    // Day4::new().print_answers();
+    // Day5::new().print_answers();
+    // Day6::new().print_answers();
+    // Day7::new().print_answers();
+    // Day8::new().print_answers();
     Day9::new().print_answers();
     Day10::new().print_answers();
 }
