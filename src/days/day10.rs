@@ -35,11 +35,13 @@ Input : inputs\\day10.txt
 use crate::prelude::*;
 
 pub struct Day10 {
+    op_list : Vec<Op>
 }
 
 impl Day10 {
     pub fn new() -> Day10 {
         let mut day = Day10 {
+            op_list : Vec::new()
         };
 
         day.load_data();
@@ -53,14 +55,111 @@ impl DailyPuzzle for Day10 {
     }
 
     fn load_data(&mut self) {
-        //let lines = read_lines("inputs\\day10.txt");
+        let lines = read_lines("inputs\\day10.txt").map(|line| line.unwrap());
+        for line in lines {
+            if line == "noop" {
+                self.op_list.push(Op::Noop);
+            }
+            else {
+                let value = line.split_whitespace().skip(1).next().unwrap().parse::<i32>().unwrap();
+                self.op_list.push(Op::Add(value));
+            }
+        }
     }
 
     fn get_base_answer(&self) -> Option<String> {
-        None
+        let mut cycle : i32 = 0;
+        let mut total_signal_strength : i32 = 0;
+        let mut register : i32 = 1;
+
+        for op in &self.op_list {
+            match op {
+                Op::Add(value) => {
+                    total_signal_strength += cycle_tick(&mut cycle, &mut register, None);
+                    total_signal_strength += cycle_tick(&mut cycle, &mut register, Some(*value));
+                }
+                Op::Noop => total_signal_strength += cycle_tick(&mut cycle, &mut register, None)
+            }
+        }
+
+        Some(total_signal_strength.to_string())
     }
 
     fn get_bonus_answer(&self) -> Option<String> {
-        None
+        let mut cycle : i32 = 1;
+        let mut pixels_drawn : String = String::from("\n");
+        let mut register : i32 = 1;
+
+        for op in &self.op_list {
+            match op {
+                Op::Add(value) => {
+                    pixels_drawn += draw_cycle(&mut cycle, &mut register, None);
+                    pixels_drawn += draw_cycle(&mut cycle, &mut register, Some(*value));
+                }
+                Op::Noop => pixels_drawn += draw_cycle(&mut cycle, &mut register, None)
+            }
+        }
+
+        Some(pixels_drawn)
     }
+}
+
+fn cycle_tick(cycle_counter : &mut i32, register : &mut i32, val : Option<i32>) -> i32 {
+    let mut signal : i32 = 0;
+    *cycle_counter += 1;
+    
+    if (*cycle_counter - 20) % 40 == 0 {
+        signal = *cycle_counter * *register;
+    }
+    
+    if let Some(num) = val {
+        *register += num;
+    }
+    
+    signal
+}
+
+fn draw_cycle(cycle_counter : &mut i32, register : &mut i32, val : Option<i32>) -> &'static str {
+    let mut newline : bool = false;
+    if (*cycle_counter) % 40 == 0 {
+        newline = true;
+    }
+
+    // works? works. So shaddap xD
+    let mut pos = *cycle_counter;
+    if pos > 200 {
+        pos -= 200;
+    } else if pos > 160 {
+        pos -= 160;
+    } else if pos > 120 {
+        pos -= 120;
+    } else if pos > 80 {
+        pos -= 80;
+    } else if pos > 40 {
+        pos -= 40;
+    }
+
+    let should_draw : bool = pos - 1 == *register || pos - 1 == *register - 1 || pos - 1 == *register + 1;
+    
+    if let Some(num) = val {
+        *register += num;
+    }
+    *cycle_counter += 1;
+
+    match should_draw {
+        true => match newline {
+            true => "#\n",
+            false => "#",
+        },
+        false => match newline {
+            true => ".\n",
+            false => ".",
+        },
+    }
+}
+
+
+enum Op {
+    Add(i32),
+    Noop
 }
