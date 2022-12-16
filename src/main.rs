@@ -20,5 +20,9 @@ fn main() {
     // Day9::new().print_answers();
     // Day10::new().print_answers();
     // Day11::new().print_answers();
-    Day13::new().print_answers();
+    // Day12::new().print_answers();
+    // Day13::new().print_answers();
+    // Day14::new().print_answers();
+    // Day15::new().print_answers();
+    // Day16::new().print_answers();
 }
